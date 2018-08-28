@@ -34,4 +34,11 @@ app.get('/',function (req,res) {
   })
 })
 
+//捡到了瓶子  扔回去,其实相当于自己新仍了一个瓶子，只是存活时间修改下
+//post?owner=xxx&type=xxx&content=xxx
+app.post('/back',function (req,res) {
+  redis.throwBack(req.body,function (result) {
+    res.json(result)
+  })
+})
 app.listen(3000)

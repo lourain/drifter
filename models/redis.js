@@ -26,6 +26,7 @@ exports.throw = function (bottle,callback) {
 
 exports.pick = function (info,callback) {
     var type = {male:0,female:1}
+    //捡到海星的概率
     if(Math.random()<0.2){
         return callback({code:1,msg:'海星'})
     }
@@ -44,6 +45,20 @@ exports.pick = function (info,callback) {
             })
 
 
+        })
+    })
+}
+
+exports.throwBack = function (bottle,callback) {
+    var type = {male:0,female:1}
+    var bottleId = Math.random().toString(16)
+    client.SELECT(type[bottle.type],function () {
+        client.HMSET(bottleId,function (err,result) {
+            if(err){
+                return callback({code:0,msg:'过会在试试把..'})
+            }
+            callback({code:1,msg:result})
+            client.PEXPIRE(bottleId,bottle.time+3600*1000*24-Date.now())//以毫秒计算 所以用到了PEXPIRE
         })
     })
 }
