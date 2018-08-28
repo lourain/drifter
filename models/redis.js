@@ -26,11 +26,13 @@ exports.throw = function (bottle,callback) {
 
 exports.pick = function (info,callback) {
     var type = {male:0,female:1}
-    
+    if(Math.random()<0.2){
+        return callback({code:1,msg:'海星'})
+    }
     client.SELECT(type[info.type],function () {
         client.RANDOMKEY(function (err,bottleId) {
             if(!bottleId){
-                return callback({code:0,msg:'大海空空如也..'})
+                return callback({code:0,msg:'海星'})
             }
             client.HGETALL(bottleId,function (err,result) {
                 if(err){
@@ -40,6 +42,8 @@ exports.pick = function (info,callback) {
                 //redis内删除这个key
                 client.DEL(bottleId)
             })
+
+
         })
     })
 }
