@@ -15,7 +15,9 @@ exports.throw = function (bottle,callback) {
             //扔瓶子次数加1
             client2.INCR(bottle.owner,function () {
                 client2.TTL(bottle.owner,function (err,ttl) {
-                    
+                    if(ttl===-1){
+                        client2.EXPIRE(bottle.owner,86400)
+                    }
                 })
             })
         })
