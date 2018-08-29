@@ -2,10 +2,24 @@ var redis = require('redis')
 var client = redis.createClient({
     host:'122.152.219.175',
     port:'6379',
+    auth_pass:'wsxrk007'
 })
-
+var client2 = redis.createClient()
 //我们的个人信息内容相当于瓶子bottle(obj)
 exports.throw = function (bottle,callback) {
+    client2.SELECT(2,function () {
+        client2.GET(bottle.owner,function (err,result) {
+            if(result>=10){
+                return callback({code:0,msg:'今天仍瓶子的机会已经用完了'})
+            }
+            //扔瓶子次数加1
+            client2.INCR(bottle.owner,function () {
+                client2.TTL(bottle.owner,function (err,ttl) {
+                    
+                })
+            })
+        })
+    })
     bottle.time = bottle.time || Date.now()
     //为每个瓶子随机添加一个id
     var bottleId = Math.random().toString(16)
