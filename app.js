@@ -38,7 +38,7 @@ app.get('/',function (req,res) {
 //post?owner=xxx&type=xxx&content=xxx  
 app.post('/back',function (req,res) {
   redis.throwBack(req.body,function (result) {
-    res.json(result)
+    res.json(result)   
   })
 })
 app.listen(3000)
