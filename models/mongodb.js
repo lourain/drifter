@@ -19,3 +19,11 @@ exports.save = function (picker,_bottle,callback) {
         callback(err)
     })
 }
+exports.getAll = function (user,callback) {
+    bottleModel.find({'bottle':user},function (err,bottles) {
+        if(err){
+            return callback({code:0,msg:'获取漂流瓶列表失败'})
+        }
+        callback({code:1,msg:bottles})
+    })
+}

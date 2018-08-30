@@ -51,7 +51,7 @@ exports.throw = function (bottle,callback) {
 
 exports.pick = function (info,callback) {
     client3.SELECT(3,function () {
-        client.GET(info.user,function (err,) {
+        client.GET(info.user,function (err,result) {
             if(result>=10){
                 return callback({code:0,msg:'今天捡瓶子的机会已经用完了'})
             }
@@ -67,7 +67,6 @@ exports.pick = function (info,callback) {
             })
         })
     })
-
 
     var type = {male:0,female:1}
     //捡到海星的概率
