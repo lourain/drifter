@@ -4,7 +4,16 @@ var client = redis.createClient({
     port:'6379',
     auth_pass:'wsxrk007'
 })
-var client2 = redis.createClient()
+var client2 = redis.createClient({
+    host: '122.152.219.175',
+    port: '6379',
+    auth_pass: 'wsxrk007'
+})
+var client3 = redis.createClient({
+    host: '122.152.219.175',
+    port: '6379',
+    auth_pass: 'wsxrk007'
+})
 //我们的个人信息内容相当于瓶子bottle(obj)
 exports.throw = function (bottle,callback) {
     client2.SELECT(2,function () {
@@ -41,6 +50,25 @@ exports.throw = function (bottle,callback) {
 
 
 exports.pick = function (info,callback) {
+    client3.SELECT(3,function () {
+        client.GET(info.user,function (err,) {
+            if(result>=10){
+                return callback({code:0,msg:'今天捡瓶子的机会已经用完了'})
+            }
+            client3.INCR(info.user,function () {
+                //检查是否是当天第一次捡瓶子
+                //若是，则设置该用户捡瓶子次数键的生存期为1天
+                //若不是，生存期保持不变
+                client.TTL(info.user,function (err,ttl) {
+                    if(ttl===-1){
+                        client3.EXPIRE(info.user,86400)
+                    }  
+                })
+            })
+        })
+    })
+
+
     var type = {male:0,female:1}
     //捡到海星的概率
     if(Math.random()<0.2){
