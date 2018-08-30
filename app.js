@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var redis = require('./models/redis')
+var mongodb = require('./models/mongodb')
 var app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -30,7 +31,15 @@ app.get('/',function (req,res) {
     return res.json({code:0,msg:'类型错误'})
   }
   redis.pick(req.query,function (result) {
-    res.json(result)
+    if(result.code===1){
+      //捡到瓶子后存到我的瓶子内
+      mongodb.save(req.query.user,req.query,function (err) {
+        if(err){
+          return res.json({code:0,msg:'获取漂流瓶失败，请重试'})
+        }
+        res.json(result)
+      })
+    }
   })
 })
 
