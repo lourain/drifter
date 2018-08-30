@@ -27,3 +27,11 @@ exports.getAll = function (user,callback) {
         callback({code:1,msg:bottles})
     })
 }
+exports.getOne = function (id,callback) {
+    bottleModel.findById(id,function (err,bottle) {
+        if(err){
+            return callback({code:0,msg:'读取漂流瓶失败'})
+        }
+        callback({code:1,msg:bottle})
+    })
+}

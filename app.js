@@ -42,13 +42,13 @@ app.get('/',function (req,res) {
     }
   })
 })
-
+ 
 //扔到海里去
 //捡到了瓶子  扔回去,其实相当于自己新仍了一个瓶子，只是存活时间修改下
 //post?owner=xxx&type=xxx&content=xxx  
 app.post('/back',function (req,res) {
   redis.throwBack(req.body,function (result) {
-    res.json(result)   
+    res.json(result) 
   })
 })
 
@@ -60,4 +60,11 @@ app.get('/user/:user',function (req,res) {
   })
 })
 
+//获取特定id的漂流瓶
+//GET /bottle/5b87adf220192b95f0715f58
+app.get('/bottle/:id',function (req,res) {
+  mongodb.getOne(req.params.id,function (result){
+    res.json(result)
+  })
+})
 app.listen(3000)
