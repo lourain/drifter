@@ -67,4 +67,13 @@ app.get('/bottle/:id',function (req,res) {
     res.json(result)
   })
 })
+
+//回复特定的id的漂流瓶
+//POST user=xxx&content=xxx&time=xxx
+app.post('/reply/:id',function (req,res) {
+  if (!(req.body.user && req.body.content)){
+    return res.json({code:0,msg:'回复信息不完整'})
+  }
+  mongodb.reply()
+})
 app.listen(3000)

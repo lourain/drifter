@@ -35,3 +35,26 @@ exports.getOne = function (id,callback) {
         callback({code:1,msg:bottle})
     })
 }
+exports.reply = function (id,reply,callback) {
+    reply.time = reply.time || Date.now()
+    //通过id查找到要回复的漂流瓶
+    bottleModel.findById(id,function (err,bottle) {
+        if(err){
+            return callback({code:0,msg:'回复漂流瓶失败'})
+        }
+        var newBottle = {}
+        newBottle.bottle = bottle.bottle
+        newBottle.message = bottle.message
+        //如果第一次回复，则再bottle内加上漂流瓶主人
+        if(newBottle.bottle.length ===1){
+            newBottle.bottle.length.push(newBottle.message[0][0])
+        }
+        //在newBottle内添加回复信息
+        newBottle.message.push([reply.user,reply.time,reply.cotent])
+        bottleModel.findByIdAndUpdate(id,newBottle,function (err,bottle) {
+            if(err){
+                
+            }
+        })
+    })
+}
