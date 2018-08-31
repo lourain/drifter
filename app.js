@@ -74,6 +74,8 @@ app.post('/reply/:id',function (req,res) {
   if (!(req.body.user && req.body.content)){
     return res.json({code:0,msg:'回复信息不完整'})
   }
-  mongodb.reply()
+  mongodb.reply(req.params.id,req.body,function (result) {
+    res.json(result)
+  })
 })
 app.listen(3000)

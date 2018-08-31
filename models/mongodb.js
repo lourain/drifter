@@ -47,10 +47,10 @@ exports.reply = function (id,reply,callback) {
         newBottle.message = bottle.message
         //如果第一次回复，则再bottle内加上漂流瓶主人
         if(newBottle.bottle.length ===1){
-            newBottle.bottle.length.push(newBottle.message[0][0])
+            newBottle.bottle.push(newBottle.message[0][0])
         }
         //在newBottle内添加回复信息
-        newBottle.message.push([reply.user,reply.time,reply.cotent])
+        newBottle.message.push([reply.user,reply.time,reply.content])
         bottleModel.findByIdAndUpdate(id,newBottle,function (err,bottle) {
             if(err){
                 return callback({code:0,msg:'回复漂流瓶失败'})
