@@ -53,8 +53,9 @@ exports.reply = function (id,reply,callback) {
         newBottle.message.push([reply.user,reply.time,reply.cotent])
         bottleModel.findByIdAndUpdate(id,newBottle,function (err,bottle) {
             if(err){
-                
+                return callback({code:0,msg:'回复漂流瓶失败'})
             }
+            callback({code:1,msg:bottle})
         })
     })
 }
