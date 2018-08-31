@@ -78,4 +78,12 @@ app.post('/reply/:id',function (req,res) {
     res.json(result)
   })
 })
+
+//删除特定id的瓶子
+//GET /delete/sdfsfsdfsdfsrwer
+app.get('/delete/:id',function (req,res) {
+  mongodb.delete(req.params.id,function (result) {
+    res.json(result)
+  })
+})
 app.listen(3000)

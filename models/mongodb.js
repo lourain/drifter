@@ -59,3 +59,12 @@ exports.reply = function (id,reply,callback) {
         })
     })
 }
+
+exports.delete = function (id,callback) {
+    bottleModel.findByIdAndRemove(id,function (err,result) {
+        if(err){
+            return callback({code:0,msg:'删除瓶子失败'})
+        }
+        callback({code:1,msg:result})
+    })
+}
